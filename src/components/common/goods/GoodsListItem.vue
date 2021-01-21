@@ -38,7 +38,7 @@
     }
 
     .goods-info {
-        font-size: 12px;
+        font-size: 15px;
         position: absolute;
         bottom: 5px;
         left: 0;

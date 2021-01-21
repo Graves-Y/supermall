@@ -22,7 +22,7 @@
             <img class="reimg" src="../../assets/img/home/recommend_bg.jpg">
         </a>
         <TabControl class="tab-control" :titles="['流行','热销','新款']" @tabControlClick="tabCClick"/>
-        <goods-list :goods="results.goods[currentType].list"/>
+        <goods-list :goods="showGoods"/>
         <ul>
             <li>列表</li>
             <li>列表</li>
@@ -110,6 +110,11 @@
                 ],
                 currentType:'pop'
             }
+        },
+        computed:{
+          showGoods(){
+              return this.results.goods[this.currentType].list
+          }
         },
         created() {
             this.getHomeMutidata()

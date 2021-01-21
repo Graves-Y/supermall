@@ -1,4 +1,4 @@
-import {request} from "./request";
+import {request,requestNPS} from "./request";
 
 export function getHomeMutidata() {
     return request({
@@ -7,8 +7,8 @@ export function getHomeMutidata() {
 }
 
 export function getNPSData(type,page) {
-    return request({
-        url:'',
+    return requestNPS({
+        url:'home/data',
         params:{
             type,
             page

@@ -28,6 +28,7 @@
         methods:{
             changeItem(index){
                 this.currentIndex = index
+                this.$emit("tabControlClick",index)
             }
         }
     }

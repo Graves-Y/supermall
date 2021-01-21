@@ -21,7 +21,8 @@
         <a href="https://act.mogujie.com/zzlx67">
             <img class="reimg" src="../../assets/img/home/recommend_bg.jpg">
         </a>
-        <TabControl class="tab-control" :titles="['流行','精选','新款']"/>
+        <TabControl class="tab-control" :titles="['流行','热销','新款']" @tabControlClick="tabCClick"/>
+        <goods-list :goods="results.goods[currentType].list"/>
         <ul>
             <li>列表</li>
             <li>列表</li>
@@ -79,6 +80,7 @@
 
 <script>
     import NavBar from "../../components/common/navbar/NavBar";
+    import GoodsList from "../../components/common/goods/GoodsList"
 
     import TabControl from "../../components/content/tabcontrol/TabControl";
 
@@ -97,15 +99,16 @@
                     dKeyWords:[],
                     keywords:[],
                     goods:{
-                        'pop':{page:0,list:[]},
-                        'new':{page:0,list:[]},
-                        'sell':{page:0,list:[]}
+                        pop:{page:0,list:[]},
+                        sell:{page:0,list:[]},
+                        new:{page:0,list:[]}
                     }
                 },
                 images: [
                     'https://img.yzcdn.cn/vant/apple-1.jpg',
                     'https://img.yzcdn.cn/vant/apple-2.jpg',
                 ],
+                currentType:'pop'
             }
         },
         created() {
@@ -115,24 +118,40 @@
             this.getNPSData('sell')
         },
         methods:{
+            tabCClick(index){
+                switch (index) {
+                    case 0:
+                        this.currentType = "pop"
+                        break
+                    case 1:
+                        this.currentType = "new"
+                        break
+                    case 2:
+                        this.currentType = "sell"
+                        break
+                }
+            },
+
             getHomeMutidata(){
                 getHomeMutidata().then(res => {
                     this.results.banners = res.data.data.banner.list
                     this.results.recommends = res.data.data.recommend.list
-                    console.log(res);
+                    // console.log(res);
                 })
             },
             getNPSData(type){
                 const page = this.results.goods[type].page + 1
                 getNPSData(type,page).then(res => {
-                    this.results.goods[type].list.push(...res.list)
+                    this.results.goods[type].list.push(...res.data.data.list)
+                    // console.log(res);
                     this.results.goods[type].page += 1
                 })
             }
         },
         components:{
             NavBar,
-            TabControl
+            TabControl,
+            GoodsList
         },
 
     }
@@ -165,6 +184,7 @@
     .tab-control{
         position: sticky;
         top: 44px;
+        z-index: 9;
     }
 
 </style>

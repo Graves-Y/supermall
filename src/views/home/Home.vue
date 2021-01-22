@@ -2,85 +2,38 @@
     <div id="home">
         <nav-bar class="home-nav">
             <template v-slot:center>首页</template>
-        </nav-bar> <!-- style="width: 100%;height: 100px;background-color: red" -->
-        <yd-slider autoplay="3000">
-            <yd-slider-item v-for="(item,index) in results.banners" :key="index">
-                <a :href="item.link">
-                    <img :src="item.image">
-                </a>
-            </yd-slider-item>
-        </yd-slider>
-        <div class="recommend">
-            <div class="recommend-item" v-for="(item,index) in results.recommends" :key="index">
-                <a :href="item.link">
-                    <img :src="item.image">
-                </a>
-                <div>{{item.title}}</div>
+        </nav-bar>
+        <scroll class="content">
+            <yd-slider autoplay="3000">
+                <yd-slider-item v-for="(item,index) in results.banners" :key="index">
+                    <a :href="item.link">
+                        <img :src="item.image">
+                    </a>
+                </yd-slider-item>
+            </yd-slider>
+            <div class="recommend">
+                <div class="recommend-item" v-for="(item,index) in results.recommends" :key="index">
+                    <a :href="item.link">
+                        <img :src="item.image">
+                    </a>
+                    <div>{{item.title}}</div>
+                </div>
             </div>
-        </div>
-        <a href="https://act.mogujie.com/zzlx67">
-            <img class="reimg" src="../../assets/img/home/recommend_bg.jpg">
-        </a>
-        <TabControl class="tab-control" :titles="['流行','热销','新款']" @tabControlClick="tabCClick"/>
-        <goods-list :goods="showGoods"/>
-        <ul>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-            <li>列表</li>
-        </ul>
+            <a href="https://act.mogujie.com/zzlx67">
+                <img class="reimg" src="../../assets/img/home/recommend_bg.jpg">
+            </a>
+            <TabControl class="tab-control" :titles="['流行','热销','新款']" @tabControlClick="tabCClick"/>
+            <goods-list :goods="showGoods"/>
+        </scroll>
+        <back-top/>
     </div>
 </template>
 
 <script>
     import NavBar from "../../components/common/navbar/NavBar";
     import GoodsList from "../../components/common/goods/GoodsList"
+    import Scroll from "../../components/common/scroll/Scroll";
+    import BackTop from "../../components/common/backtop/BackTop";
 
     import TabControl from "../../components/content/tabcontrol/TabControl";
 
@@ -156,7 +109,9 @@
         components:{
             NavBar,
             TabControl,
-            GoodsList
+            GoodsList,
+            Scroll,
+            BackTop
         },
 
     }
@@ -184,12 +139,28 @@
         width: 100%;
     }
     #home {
+        position: relative;
         padding-top: 44px;
+        height: 100vh;
     }
     .tab-control{
         position: sticky;
         top: 44px;
         z-index: 9;
     }
+    .content{
+        overflow: hidden;
+        position: absolute;
+        top: 44px;
+        bottom: 49px;
+        left: 0;
+        right: 0;
+    }
+    /*.content {*/
+    /*    height: calc(100% - 93px);*/
+    /*    overflow: hidden;*/
+    /*    margin-top: 44px;*/
+
+    /*}*/
 
 </style>

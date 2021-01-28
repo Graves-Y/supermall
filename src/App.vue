@@ -1,7 +1,7 @@
 <template>
 
   <div id="nav">
-    <router-view></router-view>
+    <keep-alive><router-view></router-view></keep-alive>
     <tab-bar>
       <TabBarItem path="/home" active-color="blue">
         <template v-slot:icon-text>首页</template>

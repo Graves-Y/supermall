@@ -8,6 +8,7 @@ import 'vue-ydui/dist/ydui.px.css'
 Vue.config.productionTip = false
 Vue.use(YDUI)
 // Vue.use(Vant)
+Vue.prototype.$bus = new Vue()
 new Vue({
   router,
   render: h => h(App)

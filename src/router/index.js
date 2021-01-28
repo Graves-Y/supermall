@@ -38,6 +38,12 @@ const routes = [
     component: () =>
         import("../views/shopcar/ShopCar")
   },
+  {
+    path: "/detail/:iid",
+    name: "Detail",
+    component: () =>
+        import("../views/detail/Detail")
+  },
 
 ]
 

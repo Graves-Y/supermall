@@ -41,8 +41,7 @@
     }
     .tab-control-item{
         flex: 1;
-        height: 40px;
-        line-height: 40px;
+
         text-align: center;
         font-size: 16px;
     }

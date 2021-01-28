@@ -3,7 +3,12 @@
         <nav-bar class="home-nav">
             <template v-slot:center>首页</template>
         </nav-bar>
-        <scroll class="content">
+        <scroll class="content"
+                ref="wrapper"
+                :probe-type="3"
+                @scroll="controlScroll"
+                @pullingUp="loadMore"
+                :pull-up-load="true">
             <yd-slider autoplay="3000">
                 <yd-slider-item v-for="(item,index) in results.banners" :key="index">
                     <a :href="item.link">
@@ -22,10 +27,13 @@
             <a href="https://act.mogujie.com/zzlx67">
                 <img class="reimg" src="../../assets/img/home/recommend_bg.jpg">
             </a>
-            <TabControl class="tab-control" :titles="['流行','热销','新款']" @tabControlClick="tabCClick"/>
+            <TabControl class="tab-control"
+                    :titles="titles"
+                    @tabControlClick="tabCClick"
+                    ref="tabControl"/>
             <goods-list :goods="showGoods"/>
         </scroll>
-        <back-top/>
+        <back-top @click.native="backClick" v-show="isShowBackTop"/>
     </div>
 </template>
 
@@ -39,7 +47,7 @@
 
     import {
         getHomeMutidata,
-        getNPSData
+        getNpsData
     } from "../../network/Home";
 
     export default {
@@ -61,7 +69,11 @@
                     'https://img.yzcdn.cn/vant/apple-1.jpg',
                     'https://img.yzcdn.cn/vant/apple-2.jpg',
                 ],
-                currentType:'pop'
+                currentType:'pop',
+                isShowBackTop:false,
+                tabOffSetTop:0,
+                saveY:0,
+                titles:['流行','热销','新款']
             }
         },
         computed:{
@@ -74,8 +86,28 @@
             this.getNPSData('pop')
             this.getNPSData('new')
             this.getNPSData('sell')
+
+
+        },
+        mounted() {
+            //1.加载图片
+            const refresh = this.debounce(this.$refs.wrapper.refresh,50)
+            this.$bus.$on("imgItemLoad",() => {
+                refresh()
+            })
+            //2.tabcontrol吸顶效果，获取tabcontrol的offsettop
+            //所有的组件都有一个属性$el：用于获取组件中的元素
         },
         methods:{
+            debounce(func,delay){
+                let timer = null
+                return function (...args) {
+                    if(timer) clearTimeout(timer)
+                    timer = setTimeout((
+                        func.apply(this,args)
+                    ),delay)
+                }
+            },
             tabCClick(index){
                 switch (index) {
                     case 0:
@@ -89,7 +121,13 @@
                         break
                 }
             },
+            controlScroll(position){
+                this.isShowBackTop = position.y < -1000
+            },
+            loadMore(){
+                this.getNPSData(this.currentType)
 
+            },
             getHomeMutidata(){
                 getHomeMutidata().then(res => {
                     this.results.banners = res.data.data.banner.list
@@ -99,11 +137,14 @@
             },
             getNPSData(type){
                 const page = this.results.goods[type].page + 1
-                getNPSData(type,page).then(res => {
+                getNpsData(type,page).then(res => {
                     this.results.goods[type].list.push(...res.data.data.list)
-                    // console.log(res);
                     this.results.goods[type].page += 1
+                    this.$refs.wrapper.scroll.finishPullUp()
                 })
+            },
+            backClick(){
+                this.$refs.wrapper.scroll.scrollTo(0,0,500)
             }
         },
         components:{
@@ -113,6 +154,14 @@
             Scroll,
             BackTop
         },
+        activated() {
+            this.$refs.wrapper.refresh()
+            this.$refs.wrapper.scroll.scrollTo(0,this.saveY,0)
+
+        },
+        deactivated() {
+            this.saveY = this.$refs.wrapper.getY()
+        }
 
     }
 </script>
@@ -140,13 +189,20 @@
     }
     #home {
         position: relative;
-        padding-top: 44px;
+        /*padding-top: 44px;*/
         height: 100vh;
     }
+    /*
+        吸顶
+    */
+    /*.tab-control{*/
+    /*    position: sticky;*/
+    /*    top: 44px;*/
+    /*    z-index: 9;*/
+    /*}*/
     .tab-control{
-        position: sticky;
-        top: 44px;
-        z-index: 9;
+        height: 40px;
+        line-height: 40px;
     }
     .content{
         overflow: hidden;

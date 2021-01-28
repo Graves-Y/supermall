@@ -6,7 +6,7 @@ export function getHomeMutidata() {
     })
 }
 
-export function getNPSData(type,page) {
+export function getNpsData(type,page) {
     return requestNPS({
         url:'home/data',
         params:{

@@ -1,7 +1,9 @@
 <template>
 
   <div id="nav">
-    <keep-alive><router-view></router-view></keep-alive>
+    <keep-alive exclude="Detail">
+      <router-view></router-view>
+    </keep-alive>
     <tab-bar>
       <TabBarItem path="/home" active-color="blue">
         <template v-slot:icon-text>首页</template>

@@ -4,7 +4,7 @@
             <template v-slot:center>首页</template>
         </nav-bar>
         <scroll class="content"
-                ref="wrapper"
+                ref="scroll"
                 :probe-type="3"
                 @scroll="controlScroll"
                 @pullingUp="loadMore"
@@ -45,6 +45,8 @@
 
     import TabControl from "../../components/content/tabcontrol/TabControl";
 
+    import {mixinImgItemLoad} from "../../common/mixin";
+
     import {
         getHomeMutidata,
         getNpsData
@@ -73,7 +75,8 @@
                 isShowBackTop:false,
                 tabOffSetTop:0,
                 saveY:0,
-                titles:['流行','热销','新款']
+                titles:['流行','热销','新款'],
+                imgItemLoad:null
             }
         },
         computed:{
@@ -86,28 +89,11 @@
             this.getNPSData('pop')
             this.getNPSData('new')
             this.getNPSData('sell')
-
-
         },
+        mixins:[mixinImgItemLoad],
         mounted() {
-            //1.加载图片
-            const refresh = this.debounce(this.$refs.wrapper.refresh,50)
-            this.$bus.$on("imgItemLoad",() => {
-                refresh()
-            })
-            //2.tabcontrol吸顶效果，获取tabcontrol的offsettop
-            //所有的组件都有一个属性$el：用于获取组件中的元素
         },
         methods:{
-            debounce(func,delay){
-                let timer = null
-                return function (...args) {
-                    if(timer) clearTimeout(timer)
-                    timer = setTimeout((
-                        func.apply(this,args)
-                    ),delay)
-                }
-            },
             tabCClick(index){
                 switch (index) {
                     case 0:
@@ -140,11 +126,11 @@
                 getNpsData(type,page).then(res => {
                     this.results.goods[type].list.push(...res.data.data.list)
                     this.results.goods[type].page += 1
-                    this.$refs.wrapper.scroll.finishPullUp()
+                    this.$refs.scroll.scroll.finishPullUp()
                 })
             },
             backClick(){
-                this.$refs.wrapper.scroll.scrollTo(0,0,500)
+                this.$refs.scroll.scroll.scrollTo(0,0,500)
             }
         },
         components:{
@@ -155,12 +141,14 @@
             BackTop
         },
         activated() {
-            this.$refs.wrapper.refresh()
-            this.$refs.wrapper.scroll.scrollTo(0,this.saveY,0)
+            this.$refs.scroll.refresh()
+            this.$refs.scroll.scroll.scrollTo(0,this.saveY,0)
 
         },
         deactivated() {
-            this.saveY = this.$refs.wrapper.getY()
+            this.saveY = this.$refs.scroll.getY()
+
+            this.$bus.$off('imgItemLoad',this.imgItemLoad)
         }
 
     }

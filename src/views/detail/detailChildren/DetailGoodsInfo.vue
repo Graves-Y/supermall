@@ -3,7 +3,7 @@
     <div class="desc">{{ detailInfo.desc }}</div>
     <div class="detail" v-for="(item,index) in detailInfo.detailImage" :key="index">
       <p>{{ item.key }}</p>
-      <img :src="imgItem" alt="" v-for="(imgItem, index) in item.list" :key="index"/>
+      <img :src="imgItem" alt="" v-for="(imgItem, index) in item.list" :key="index" @load="imagesLoad"/>
     </div>
   </div>
 </template>
@@ -28,9 +28,9 @@ export default {
       // 每一次图片加载完成就让 imageNumber加一 当imageNumber和图片数量一致时发送事件
       if (++this.imageNumber === this.imageNumber) {
         // 图片加载完发送请求到父组件
-        this.$emit("imagesLoad");
+        this.$emit("detailImagesLoad");
       }
-    },
+    }
   },
   watch:{
     detailInfo(){

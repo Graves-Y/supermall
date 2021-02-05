@@ -5,7 +5,7 @@
                 <img src="../../assets/img/common/back.svg" @click="btnBack">
             </template>
             <template v-slot:center>
-                <tab-control :titles=titles></tab-control>
+                <tab-control :titles=titles @tabControlClick="goIndex" ref="tabControl"></tab-control>
             </template>
         </nav-bar>
         <scroll class="content" @scroll="controlScroll" ref="scroll" :probe-type="3">
@@ -16,25 +16,28 @@
             </yd-slider>
             <detail-base-info :goods="detailResults.goodsInfo"/>
             <detail-shop-info :shop="detailResults.shopInfo"/>
-            <detail-goods-info :detail-info="detailResults.detailInfo"/>
-            <detail-param-info :paramInfo="detailResults.paramInfo"/>
+            <detail-goods-info :detail-info="detailResults.detailInfo" @detailImagesLoad="detailImagesLoad"/>
+            <detail-param-info ref="param" :paramInfo="detailResults.paramInfo"/>
+            <detail-comment-info ref="comment" :comment-info="detailResults.commentInfo"/>
+            <div style="color: red;font-size: 14px">更多推荐</div>
+            <goods-list ref="recommend" :goods="detailResults.recommends"/>
         </scroll>
-        <back-top @click.native="backClick" v-show="isShowBackTop" @imagesLoad="imagesLoad"/>
+        <back-top @click.native="backClick" v-show="isShowBackTop"/>
         <tab-bar class="detail-tab-bar">
             <tab-bar-item active-color="hotpink" path="">
-                <template v-slot:icon-text>客服</template>
+                <template v-slot:icon-text><div class="height">客服</div></template>
             </tab-bar-item>
             <tab-bar-item active-color="black" path="">
-                <template v-slot:icon-text>店铺</template>
+                <template v-slot:icon-text><div class="height">店铺</div></template>
             </tab-bar-item>
             <tab-bar-item active-color="black" path="">
-                <template v-slot:icon-text>收藏</template>
+                <template v-slot:icon-text><div class="height">收藏</div></template>
+            </tab-bar-item>
+            <tab-bar-item active-color="white" path="" @click.native="goShopCar">
+                <template v-slot:icon-text><div class="cart height">加入购物车</div></template>
             </tab-bar-item>
             <tab-bar-item active-color="white" path="">
-                <template v-slot:icon-text>加入购物车</template>
-            </tab-bar-item>
-            <tab-bar-item active-color="white" path="">
-                <template v-slot:icon-text>购买</template>
+                <template v-slot:icon-text><div class="buy height">购买</div></template>
             </tab-bar-item>
         </tab-bar>
     </div>
@@ -42,21 +45,27 @@
 
 <script>
     import NavBar from "../../components/common/navbar/NavBar";
-    import TabControl from "../../components/content/tabcontrol/TabControl"
+    import TabControl from "../../components/content/tabcontrol/TabControl";
     import DetailShopInfo from "./detailChildren/DetailShopInfo";
     import DetailBaseInfo from "./detailChildren/DetailBaseInfo";
     import DetailParamInfo from "./detailChildren/DetailParamInfo";
+    import DetailGoodsInfo from "./detailChildren/DetailGoodsInfo";
+    import DetailCommentInfo from "./detailChildren/DetailCommentInfo";
+
     import TabBar from "../../components/common/tabbar/TabBar";
     import TabBarItem from "../../components/common/tabbar/TabBarItem";
 
-    import DetailGoodsInfo from "./detailChildren/DetailGoodsInfo";
+
 
     import Scroll from "../../components/common/scroll/Scroll";
     import BackTop from "../../components/common/backtop/BackTop";
 
-    import {getDetail} from "../../network/Detail";
+    import {getDetail,getDetailRecommend} from "../../network/Detail";
 
     import {Goods ,Shop,GoodsParam} from "../../network/Detail";
+    import GoodsList from "../../components/common/goods/GoodsList";
+    import {mixinImgItemLoad} from "../../common/mixin";
+    import {debounce} from "../../common/util";
 
     export default {
         name: "Detail",
@@ -68,15 +77,20 @@
                   shopInfo:{},
                   goodsInfo:{},
                   detailInfo:{},
-                  paramInfo:{}
+                  paramInfo:{},
+                  commentInfo:{},
+                  recommends:[]
               },
               titles:['商品','参数','评价','推荐'],
-              isShowBackTop:false
+              isShowBackTop:false,
+              imgItemLoad:null,
+              themeTopY:[],
+              getThemeTopY:null,
+              currentIndex:0
           }
         },
         created() {
             this.iid = this.$route.params.iid
-            console.log(this.iid);
             getDetail(this.iid).then(res => {
                 this.detailResults.detailSwipperImg = res.data.result.itemInfo.topImages
                 console.log(res.data.result);
@@ -89,9 +103,25 @@
                 this.detailResults.paramInfo = new GoodsParam(
                     res.data.result.itemParams.info,
                     res.data.result.itemParams.rule)
+                if(res.data.result.rate.cRate !== 0){
+                    this.detailResults.commentInfo = res.data.result.rate.list[0]
+                }
             })
+            getDetailRecommend().then(res => {
+                console.log(res.data.data.list);
+                this.detailResults.recommends = res.data.data.list
+            })
+            this.getThemeTopY = debounce(() => {
+                this.themeTopY = []
+                this.themeTopY.push(0)
+                this.themeTopY.push(this.$refs.param.$el.offsetTop)
+                this.themeTopY.push(this.$refs.comment.$el.offsetTop)
+                this.themeTopY.push(this.$refs.recommend.$el.offsetTop)
+                this.themeTopY.push(Number.MAX_VALUE)
+            },100)
         },
         components:{
+            GoodsList,
             TabBar,
             NavBar,
             TabBarItem,
@@ -101,7 +131,8 @@
             Scroll,
             DetailGoodsInfo,
             BackTop,
-            DetailParamInfo
+            DetailParamInfo,
+            DetailCommentInfo,
         },
         methods:{
             btnBack(){
@@ -112,10 +143,42 @@
             },
             controlScroll(position){
                 this.isShowBackTop = position.y < -1000
+                const y = -position.y
+                let t = this.themeTopY
+                let lenth = this.themeTopY.length
+                //方式一：
+                // for(let i = 0;i < lenth;i++){
+                //     if(this.currentIndex !== i && ((i < lenth - 1 && y >= t[i] && y < t[i+1]) ||
+                //         (i === lenth - 1 && y >= t[i]))){
+                //         this.currentIndex = i
+                //         this.$refs.tabControl.currentIndex = this.currentIndex
+                //     }
+                // }
+
+                //方式二：
+                for(let i = 0;i < lenth - 1;i++){
+                    if(this.currentIndex !== i && (y >= t[i] && y < t[i+1])){
+                        this.currentIndex = i
+                        this.$refs.tabControl.currentIndex = this.currentIndex
+                    }
+                }
             },
-            imagesLoad(){
-                this.refs.scroll.refresh()
+            detailImagesLoad(){
+                this.refresh()
+                this.getThemeTopY()
+            },
+            goIndex(index){
+                this.$refs.scroll.scroll.scrollTo(0,-this.themeTopY[index],100)
+            },
+            goShopCar(){
+                this.$router.push('/shopcar')
             }
+        },
+        mixins:[mixinImgItemLoad],
+        mounted() {
+        },
+        destroyed() {
+            this.$bus.$off('imgItemLoad',this.imgItemLoad)
         }
     }
 </script>
@@ -131,9 +194,23 @@
         overflow: hidden;
         position: absolute;
         top: 44px;
-        bottom: 49px;
+        bottom: 56px;
         left: 0;
         right: 0;
+    }
+    .cart {
+        background-color: yellow;
+        font-size: 20px;
+        width: 100px;
+    }
+    .buy {
+        background-color: red;
+        font-size: 20px;
+        width: 80px;
+    }
+    .height {
+        height: 66px;
+        line-height: 66px;
     }
     .detail-nav-bar{
         background-color: white;

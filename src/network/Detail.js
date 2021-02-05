@@ -40,3 +40,9 @@ export class GoodsParam {
         this.sizes = rule.tables;
     }
 }
+
+export function getDetailRecommend() {
+    return requestNPS({
+        url:"/recommend"
+    })
+}

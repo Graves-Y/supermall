@@ -1,6 +1,6 @@
 <template>
     <div class="goods-item">
-        <img :src="goodsItem.showLarge.img" alt="" @load="imgLoad" @click="goToDetail">
+        <img :src="showImg" alt="" @load="imgLoad" @click="goToDetail">
         <div class="goods-info">
             <p>{{goodsItem.title}}</p>
             <span class="price">￥{{goodsItem.price}}</span>
@@ -20,12 +20,27 @@
                 }
             }
         },
+        computed:{
+          showImg(){
+              return this.goodsItem.image || this.goodsItem.showLarge.img
+          },
+          getIID(){
+              return this.goodsItem.item_id || this.goodsItem.iid
+          }
+        },
         methods:{
             imgLoad(){
+                // 当详情页加载图片时，首页不需要调用加载方法
+                // 方式一：
+                // if(this.$route.path.indexOf("/home")){
+                //     this.$bus.$emit("homeImgItemLoad")
+                // } else if(this.$route.path.indexOf("/detail")){
+                //     this.$bus.$emit("detailImgItemLoad")
+                // }
                 this.$bus.$emit("imgItemLoad")
             },
             goToDetail(){
-                this.$router.push("/detail/"+this.goodsItem.iid)
+                this.$router.push("/detail/"+this.getIID)
             }
         }
     }

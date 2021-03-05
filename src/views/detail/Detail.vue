@@ -33,7 +33,7 @@
             <tab-bar-item active-color="black" path="">
                 <template v-slot:icon-text><div class="height">收藏</div></template>
             </tab-bar-item>
-            <tab-bar-item active-color="white" path="" @click.native="goShopCar">
+            <tab-bar-item active-color="white" path="" @click.native="addToShopCar">
                 <template v-slot:icon-text><div class="cart height">加入购物车</div></template>
             </tab-bar-item>
             <tab-bar-item active-color="white" path="">
@@ -170,8 +170,14 @@
             goIndex(index){
                 this.$refs.scroll.scroll.scrollTo(0,-this.themeTopY[index],100)
             },
-            goShopCar(){
-                this.$router.push('/shopcar')
+            addToShopCar(){
+                const product = {}
+                product.image = this.detailResults.detailSwipperImg[0]
+                product.title = this.detailResults.goodsInfo.title
+                product.desc = this.detailResults.goodsInfo.desc
+                product.price = this.detailResults.goodsInfo.realPrice
+                product.iid = this.iid
+                this.$store.dispatch('addCart',product)
             }
         },
         mixins:[mixinImgItemLoad],
@@ -185,7 +191,7 @@
 
 <style scoped>
     .detail-tab-bar{
-        height: 66px;
+        height: 49px;
     }
     .detail-tab-bar tab-bar-item {
         margin-top: 10px;
@@ -200,17 +206,15 @@
     }
     .cart {
         background-color: yellow;
-        font-size: 20px;
-        width: 100px;
+        font-size: 3.8vw;
     }
     .buy {
         background-color: red;
         font-size: 20px;
-        width: 80px;
     }
     .height {
-        height: 66px;
-        line-height: 66px;
+        height: 49px;
+        line-height: 49px;
     }
     .detail-nav-bar{
         background-color: white;

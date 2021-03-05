@@ -15,7 +15,7 @@
                 <span>{{ commentInfo.style }}</span>
             </div>
             <div class="imageShow" v-if="commentInfo.images">
-                <img :src="item" alt="" v-for="item in commentInfo.images" />
+                <img :src="item" alt="" v-for="(item,index) in commentInfo.images" :key="index"/>
             </div>
         </div>
         <div v-else class="noComment">暂无评论</div>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-    import {dateFormat} from "../../../common/util"
+    import { dateFormat } from "../../../common/util"
     export default {
         name: "DetailCommentInfo",
         props:{

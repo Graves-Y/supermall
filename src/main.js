@@ -5,6 +5,7 @@ import 'normalize.css/normalize.css'
 import YDUI from 'vue-ydui'
 import 'vue-ydui/dist/ydui.px.css'
 import store from "./store";
+// import 'vant/lib/index.css'
 // import Vant from "vant"
 Vue.config.productionTip = false
 Vue.use(YDUI)

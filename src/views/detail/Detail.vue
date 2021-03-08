@@ -93,7 +93,6 @@
             this.iid = this.$route.params.iid
             getDetail(this.iid).then(res => {
                 this.detailResults.detailSwipperImg = res.data.result.itemInfo.topImages
-                console.log(res.data.result);
                 this.detailResults.shopInfo = new Shop(res.data.result.shopInfo)
                 this.detailResults.goodsInfo = new Goods(
                     res.data.result.itemInfo,
@@ -108,7 +107,6 @@
                 }
             })
             getDetailRecommend().then(res => {
-                console.log(res.data.data.list);
                 this.detailResults.recommends = res.data.data.list
             })
             this.getThemeTopY = debounce(() => {

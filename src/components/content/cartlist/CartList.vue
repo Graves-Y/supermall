@@ -1,6 +1,8 @@
 <template>
     <div id="cart-list" v-if="cartList.length > 0">
-        <cart-list-item v-for="(item,index) in cartList" :key="index" :cart-list-item="item"/>
+        <cart-list-item v-for="(item,index) in cartList"
+                        :key="index"
+                        :cart-list-item="item"/>
     </div>
 </template>
 
@@ -18,6 +20,8 @@
         name: "CartList",
         components: {
             CartListItem
+        },
+        methods:{
         },
         mounted() {
         }

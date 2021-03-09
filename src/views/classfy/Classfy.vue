@@ -22,7 +22,13 @@
         data(){
           return{
               // scroll:null
-              checked:true
+              checked:true,
+              data:{
+                  'hhh':'xxx'
+              },
+              array:[
+                  '1','12','3','4'
+              ]
           }
         },
         components:{

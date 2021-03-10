@@ -1,0 +1,100 @@
+<template>
+    <div id="cart-bottom">
+        <div class="checkAll">
+            <van-checkbox v-model="isCheckAll" @click.native="selectAll">全选</van-checkbox>
+        </div>
+        <div class="total">合计：{{totalPrice}}元</div>
+        <div class="pay">结算（{{totalNum}}）</div>
+    </div>
+</template>
+
+<script>
+    import Vue from 'vue'
+    import { Checkbox } from 'vant';
+    import {mapGetters} from 'vuex'
+    Vue.use(Checkbox)
+    export default {
+        name: "CartBottom",
+        data(){
+          return {
+          }
+        },
+        components:{
+        },
+        methods:{
+            selectAll(){
+                if(this.isCheckAll){
+                    this.getCartLists.forEach(item => item.checked = false)
+                } else {
+                    this.getCartLists.forEach(item => item.checked = true)
+                }
+            }
+        },
+        computed:{
+            ...mapGetters(['getCartLists']),
+            totalPrice(){
+                return this.$store.state.cartLists.filter(item => {
+                    return item.checked
+                }).reduce((previousValue,item) => {
+                    return previousValue + item.price * item.count
+                },0).toFixed(2)
+            },
+            totalNum(){
+                // return this.$store.state.cartLists.filter(item => {
+                //     return item.checked
+                // }).reduce((previousValue,item) => {
+                //     return previousValue + item.count
+                // },0)
+                return this.getCartLists.filter(item => item.checked).length
+            },
+            isCheckAll:{
+                get: function() {
+                    if (this.getCartLists.length === 0) return false
+                    // 使用find
+                    return !this.getCartLists.find(item => !item.checked)
+                    // 使用filter会遍历全部，性能可能较低
+                    // return !(this.getCartLists.filter(item => !item.checked).length)
+                    // 普通遍历
+                    // for(let item of this.getCartLists){
+                    //     if (!item,checked){
+                    //         return false
+                    //     }
+                    // }
+                    //     return true
+                },
+                set: function() {
+                }
+            }
+        }
+    }
+</script>
+
+<style scoped>
+    #cart-bottom {
+        position: absolute;
+        bottom: 49px;
+        height: 40px;
+        width: 100%;
+        display: flex;
+        padding: 10px;
+    }
+    .checkAll {
+        font-size: 16px;
+    }
+    .total {
+        margin-left: 30px;
+        font-size: 18px;
+        color: orange;
+    }
+    .pay {
+        background-color: red;
+        font-size: 24px;
+        height: 40px;
+        line-height: 40px;
+        color: white;
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding-left: 10px;
+    }
+</style>

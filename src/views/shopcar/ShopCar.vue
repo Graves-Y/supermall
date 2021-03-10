@@ -6,13 +6,15 @@
         <scroll class="content" ref="scroll">
             <cart-list :cart-list="list"/>
         </scroll>
+        <cart-bottom/>
     </div>
 </template>
 
 <script>
     import NavBar from "../../components/common/navbar/NavBar";
     import Scroll from "../../components/common/scroll/Scroll";
-    import CartList from "../../components/content/cartlist/CartList";
+    import CartList from "./shopCarChildren/CartList";
+    import CartBottom from "./shopCarChildren/CartBottom";
     import {mapGetters} from 'vuex'
     export default {
         name: "ShopCar",
@@ -24,7 +26,8 @@
         components:{
             NavBar,
             Scroll,
-            CartList
+            CartList,
+            CartBottom
         },
         computed:{
             // 两种语法 语法一
@@ -52,7 +55,7 @@
     overflow: hidden;
     position: absolute;
     top: 49px;
-    bottom: 49px;
+    bottom: 89px;
     left: 0;
     right: 0;
 }

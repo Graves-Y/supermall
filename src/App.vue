@@ -5,16 +5,16 @@
       <router-view></router-view>
     </keep-alive>
     <tab-bar>
-      <TabBarItem path="/home" active-color="blue">
+      <TabBarItem path="/home" active-color="red">
         <template v-slot:icon-text>首页</template>
       </TabBarItem>
       <TabBarItem path="/classfy">
         <template v-slot:icon-text>分类</template>
       </TabBarItem>
-      <TabBarItem path="/shopcar" active-color="green">
+      <TabBarItem path="/shopcar" active-color="red">
         <template v-slot:icon-text>购物车</template>
       </TabBarItem>
-      <TabBarItem path="/profile" active-color="yellow">
+      <TabBarItem path="/profile" active-color="red">
         <template v-slot:icon-text>我的</template>
       </TabBarItem>
 

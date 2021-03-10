@@ -2,7 +2,7 @@
     <div id="cart-list-item">
         <div class="list-item">
             <div class="checkbox">
-                <van-checkbox v-model="checked" />
+                <van-checkbox v-model="cartListItem.checked"/>
             </div>
             <img :src="cartListItem.image"  alt="" class="item-img">
             <div class="item-info">
@@ -10,7 +10,7 @@
                 <div class="desc">{{cartListItem.desc}}</div>
                 <div class="pac">
                     <div class="price">￥{{cartListItem.price}}</div>
-                    <div class="count">X{{cartListItem.count}}</div>
+                    <div class="count">×{{cartListItem.count}}</div>
                 </div>
                 <button class="delete" @click="deleteItem(cartListItem.iid)">删除</button>
             </div>
@@ -28,7 +28,6 @@
         name: "CartListItem",
         data(){
             return {
-                checked:false
             }
         },
         props:{

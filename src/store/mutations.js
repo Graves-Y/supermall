@@ -4,6 +4,7 @@ export default {
     },
     addCartType(state,payload){
         payload.count = 1
+        payload.checked = false
         state.cartLists.push(payload)
     },
     deleteCart(state,payload){

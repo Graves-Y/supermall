@@ -6,7 +6,6 @@
 <!--        <div class="wrapper">-->
 <!--        </div>-->
         <van-checkbox v-model="checked">复选框</van-checkbox>
-
     </div>
 </template>
 

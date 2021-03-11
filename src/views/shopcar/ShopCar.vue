@@ -16,6 +16,7 @@
     import CartList from "./shopCarChildren/CartList";
     import CartBottom from "./shopCarChildren/CartBottom";
     import {mapGetters} from 'vuex'
+
     export default {
         name: "ShopCar",
         data(){
@@ -47,16 +48,18 @@
 </script>
 
 <style scoped>
-#shopcar {
-    position: relative;
-    height: 100vh;
-}
-.content{
-    overflow: hidden;
-    position: absolute;
-    top: 49px;
-    bottom: 89px;
-    left: 0;
-    right: 0;
-}
+    #shopcar {
+        position: relative;
+        height: 100vh;
+    }
+    .content{
+        overflow: hidden;
+        position: absolute;
+        top: 49px;
+        bottom: 89px;
+        left: 0;
+        right: 0;
+        background-color: white;
+    }
+
 </style>

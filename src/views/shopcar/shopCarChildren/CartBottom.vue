@@ -4,7 +4,7 @@
             <van-checkbox v-model="isCheckAll" @click.native="selectAll">全选</van-checkbox>
         </div>
         <div class="total">合计：{{totalPrice}}元</div>
-        <div class="pay">结算（{{totalNum}}）</div>
+        <div class="pay" @click="toPay">结算（{{totalNum}}）</div>
     </div>
 </template>
 
@@ -12,6 +12,7 @@
     import Vue from 'vue'
     import { Checkbox } from 'vant';
     import {mapGetters} from 'vuex'
+    import {Toast} from 'vant'
     Vue.use(Checkbox)
     export default {
         name: "CartBottom",
@@ -27,6 +28,15 @@
                     this.getCartLists.forEach(item => item.checked = false)
                 } else {
                     this.getCartLists.forEach(item => item.checked = true)
+                }
+            },
+            toPay () {
+                if(this.getCartLists.length === 0) {
+                    Toast('请先选择商品加入购物车')
+                    return
+                }
+                if(!this.getCartLists.filter(item => item.checked === true).length){
+                    Toast('请选择商品')
                 }
             }
         },

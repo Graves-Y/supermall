@@ -67,6 +67,7 @@
     import {mixinImgItemLoad} from "../../common/mixin";
     import {debounce} from "../../common/util";
 
+    import {Toast} from 'vant'
     export default {
         name: "Detail",
         data(){
@@ -175,7 +176,9 @@
                 product.desc = this.detailResults.goodsInfo.desc
                 product.price = this.detailResults.goodsInfo.realPrice
                 product.iid = this.iid
-                this.$store.dispatch('addCart',product)
+                this.$store.dispatch('addCart',product).then(res => {
+                    Toast.success(res)
+                })
             }
         },
         mixins:[mixinImgItemLoad],

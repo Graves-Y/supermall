@@ -26,7 +26,24 @@ const state = {
             price:"68.00",
             title:"2018秋季新款韩版女装字母印花宽松连帽休闲卫衣搭配松紧腰九分牛仔裤两件套女时尚运动套装潮"
         }
-        ]
+        ],
+    profileInfo:[
+        {
+            title:'我的余额',
+            num:'0.00',
+            unit:'元'
+        },
+        {
+            title:'我的优惠券',
+            num:'0',
+            unit: '张'
+        },
+        {
+            title: '我的积分',
+            num: '0',
+            unit: '分'
+        }
+    ]
 }
 
 const store = new Vuex.Store ({

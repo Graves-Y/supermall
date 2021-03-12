@@ -1,21 +1,16 @@
 <template>
     <div id="classify">
-<!--        <nav-bar class="home-nav">-->
-<!--            <template v-slot:center>分类</template>-->
-<!--        </nav-bar>-->
-<!--        <div class="wrapper">-->
-<!--        </div>-->
-        <van-checkbox v-model="checked">复选框</van-checkbox>
+        <nav-bar class="home-nav">
+            <template v-slot:center>分类</template>
+        </nav-bar>
+        <div class="wrapper">
+        </div>
     </div>
 </template>
 
 <script>
-    // import NavBar from "../../components/common/navbar/NavBar";
-    // import BScroll from "@better-scroll/core"
-    import Vue from 'vue'
-    import { Checkbox, CheckboxGroup } from 'vant';
-    Vue.use(Checkbox)
-    Vue.use(CheckboxGroup)
+    import NavBar from "../../components/common/navbar/NavBar";
+    import BScroll from "@better-scroll/core"
     export default {
         name: "Classfy",
         data(){
@@ -31,10 +26,10 @@
           }
         },
         components:{
-            // NavBar
+            NavBar
         },
         mounted() {
-            // this.scroll = new BScroll('.wrapper',{})
+            this.scroll = new BScroll('.wrapper',{})
         }
     }
 </script>

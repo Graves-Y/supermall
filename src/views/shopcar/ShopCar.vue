@@ -5,7 +5,15 @@
         </nav-bar>
         <scroll class="content" ref="scroll">
             <cart-list :cart-list="list"/>
+            <div class="hint" v-show="length === 0">
+                <img src="../../assets/img/cart/cartnull.png">
+                购物车空空的，去
+                <span class="toHome" @click="toHome">
+                逛逛
+            </span>吧~
+            </div>
         </scroll>
+
         <cart-bottom/>
     </div>
 </template>
@@ -29,6 +37,11 @@
             Scroll,
             CartList,
             CartBottom
+        },
+        methods:{
+            toHome () {
+                this.$router.push('/home')
+            }
         },
         computed:{
             // 两种语法 语法一
@@ -60,6 +73,22 @@
         left: 0;
         right: 0;
         background-color: white;
+    }
+
+    .hint {
+        text-align: center;
+        position: relative;
+        /*top: 100px;*/
+        font-size: 18px;
+        color: gray;
+        /*background-color: red;*/
+    }
+    .hint img{
+        width: 100%;
+    }
+    .toHome{
+        color: blue;
+        border-bottom: 1px solid;
     }
 
 </style>

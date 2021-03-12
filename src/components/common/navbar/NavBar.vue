@@ -19,7 +19,7 @@
         line-height: 47px;
         text-align: center;
         box-shadow: 0 4px 4px rgba(100,100,100,.1);
-        background-color: dodgerblue;
+        background-color: #BDBCF0;
         color: white;
         font-size: 22px;
         /*在使用浏览器原生滚动时，为了让导航不跟随一起滚动*/

@@ -23,23 +23,30 @@
             <goods-list ref="recommend" :goods="detailResults.recommends"/>
         </scroll>
         <back-top @click.native="backClick" v-show="isShowBackTop"/>
-        <tab-bar class="detail-tab-bar">
-            <tab-bar-item active-color="hotpink" path="">
-                <template v-slot:icon-text><div class="height">客服</div></template>
-            </tab-bar-item>
-            <tab-bar-item active-color="black" path="">
-                <template v-slot:icon-text><div class="height">店铺</div></template>
-            </tab-bar-item>
-            <tab-bar-item active-color="black" path="">
-                <template v-slot:icon-text><div class="height">收藏</div></template>
-            </tab-bar-item>
-            <tab-bar-item active-color="white" path="" @click.native="addToShopCar">
-                <template v-slot:icon-text><div class="cart height">加入购物车</div></template>
-            </tab-bar-item>
-            <tab-bar-item active-color="white" path="">
-                <template v-slot:icon-text><div class="buy height">购买</div></template>
-            </tab-bar-item>
-        </tab-bar>
+<!--        <tab-bar class="detail-tab-bar">-->
+<!--            <tab-bar-item active-color="hotpink" path="">-->
+<!--                <template v-slot:icon-text><div class="height">客服</div></template>-->
+<!--            </tab-bar-item>-->
+<!--            <tab-bar-item active-color="black" path="">-->
+<!--                <template v-slot:icon-text><div class="height">店铺</div></template>-->
+<!--            </tab-bar-item>-->
+<!--            <tab-bar-item active-color="black" path="">-->
+<!--                <template v-slot:icon-text><div class="height">收藏</div></template>-->
+<!--            </tab-bar-item>-->
+<!--            <tab-bar-item active-color="white" path="" @click.native="addToShopCar">-->
+<!--                <template v-slot:icon-text><div class="cart height">加入购物车</div></template>-->
+<!--            </tab-bar-item>-->
+<!--            <tab-bar-item active-color="white" path="">-->
+<!--                <template v-slot:icon-text><div class="buy height">购买</div></template>-->
+<!--            </tab-bar-item>-->
+<!--        </tab-bar>-->
+        <van-goods-action>
+            <van-goods-action-icon icon="chat-o" text="客服" color="#ee0a24" />
+            <van-goods-action-icon icon="shop-o" text="店铺" />
+            <van-goods-action-icon icon="star" text="已收藏" color="#ff5000" />
+            <van-goods-action-button type="warning" text="加入购物车" @click.native="addToShopCar"/>
+            <van-goods-action-button type="danger" text="立即购买" />
+        </van-goods-action>
     </div>
 </template>
 
@@ -52,8 +59,8 @@
     import DetailGoodsInfo from "./detailChildren/DetailGoodsInfo";
     import DetailCommentInfo from "./detailChildren/DetailCommentInfo";
 
-    import TabBar from "../../components/common/tabbar/TabBar";
-    import TabBarItem from "../../components/common/tabbar/TabBarItem";
+    // import TabBar from "../../components/common/tabbar/TabBar";
+    // import TabBarItem from "../../components/common/tabbar/TabBarItem";
 
 
 
@@ -68,6 +75,13 @@
     import {debounce} from "../../common/util";
 
     import {Toast} from 'vant'
+
+    import Vue from 'vue';
+    import { GoodsAction, GoodsActionIcon, GoodsActionButton } from 'vant';
+
+    Vue.use(GoodsAction);
+    Vue.use(GoodsActionButton);
+    Vue.use(GoodsActionIcon);
     export default {
         name: "Detail",
         data(){
@@ -121,9 +135,9 @@
         },
         components:{
             GoodsList,
-            TabBar,
+            // TabBar,
             NavBar,
-            TabBarItem,
+            // TabBarItem,
             TabControl,
             DetailShopInfo,
             DetailBaseInfo,

@@ -4,7 +4,7 @@
             <van-checkbox v-model="isCheckAll" @click.native="selectAll">全选</van-checkbox>
         </div>
         <div class="total">合计：{{totalPrice}}元</div>
-        <div class="pay" @click="toPay">结算（{{totalNum}}）</div>
+        <button class="pay" @click="toPay">结算（{{totalNum}}）</button>
     </div>
 </template>
 
@@ -98,13 +98,15 @@
     }
     .pay {
         background-color: red;
-        font-size: 24px;
-        height: 40px;
-        line-height: 40px;
+        font-size: 22px;
+        /*height: 40px;*/
+        /*line-height: 40px;*/
         color: white;
         position: absolute;
         right: 0;
         top: 0;
-        padding-left: 10px;
+        padding: 8px;
+        border-radius: 20px;
+        border: none;
     }
 </style>

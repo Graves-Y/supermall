@@ -12,7 +12,7 @@
                     <div class="price">￥{{cartListItem.price}}</div>
                     <div class="count">×{{cartListItem.count}}</div>
                 </div>
-                <button class="delete" @click="deleteItem(cartListItem.iid)">删除</button>
+                <div class="delete" @click="deleteItem(cartListItem.iid)">删除</div>
             </div>
         </div>
     </div>
@@ -91,14 +91,11 @@
         color: red;
     }
     .delete {
-        background-color: red;
-        width: 40px;
-        height: 26px;
         font-size: 13px;
-        color: white;
-        border: none;
         float: right;
-        border-radius: 8px;
+        margin-top: 8px;
+        color: red;
+        border-bottom: 1px solid;
     }
     .pac {
         display: flex;

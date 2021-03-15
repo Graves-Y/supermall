@@ -78,12 +78,12 @@
         border-bottom: 1px solid gray;
     }
     .set img{
-        width: 35px;
-        height: 35px;
+        width: 33px;
+        height: 33px;
     }
     .set{
         display: flex;
-        padding: 8px;
+        padding: 6px;
         border-top: 20px solid #eee;
         color: gray;
     }

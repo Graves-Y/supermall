@@ -57,7 +57,7 @@
     .goods-item img {
         width: 100%;
         border-radius: 5px;
-        border:3px solid hotpink;
+        /*border:3px solid hotpink;*/
     }
 
     .goods-info {

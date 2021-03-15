@@ -8,7 +8,7 @@
       <TabBarItem path="/home" active-color="#BDBCF0">
         <template v-slot:icon-text>首页</template>
       </TabBarItem>
-      <TabBarItem path="/classfy" active-color="#BDBCF0">
+      <TabBarItem path="/classify" active-color="#BDBCF0">
         <template v-slot:icon-text>分类</template>
       </TabBarItem>
       <TabBarItem path="/shopcar" active-color="#BDBCF0">

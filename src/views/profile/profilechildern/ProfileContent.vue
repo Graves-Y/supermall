@@ -1,6 +1,9 @@
 <template>
     <div id="profileContent">
-        <div class="ceontentItem" v-for="(item,index) in contents" :key="index">
+        <div class="contentItem"
+             v-for="(item,index) in contents"
+             :key="index"
+             :class="{border : index !== currentIndex}" >
             <img :src="item.icon">
             <div class="title">{{item.title}}</div>
         </div>
@@ -46,8 +49,15 @@
                         title:'下载购物APP',
                         link:''
                     }
-                ]
+                ],
+                currentIndex:0
             }
+        },
+        computed:{
+        },
+        mounted() {
+            console.log(this.contents.length);
+            this.currentIndex = this.contents.length - 1
         }
     }
 </script>
@@ -56,22 +66,24 @@
     #profileContent {
         color: gray;
     }
-    .ceontentItem img {
+    .contentItem img {
         width: 37px;
         height: 44px;
     }
-    .ceontentItem{
+    .contentItem{
         display: flex;
         padding: 4px;
+    }
+    .border {
         border-bottom: 1px solid gray;
     }
     .set img{
-        width: 37px;
-        height: 37px;
+        width: 35px;
+        height: 35px;
     }
     .set{
         display: flex;
-        padding: 4px;
+        padding: 8px;
         border-top: 20px solid #eee;
         color: gray;
     }

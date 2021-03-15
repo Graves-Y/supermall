@@ -2,8 +2,8 @@
     <div id="profileInfo">
         <van-grid :column-num="3" class="van-grid">
             <van-grid-item v-for="(item,index) in profileInfo" :key="index">
-                <van-text class="textNum">{{item.num + ' ' + item.unit}}</van-text>
-                <van-text class="textTile">{{item.title}}</van-text>
+                <div class="textNum">{{item.num + ' ' + item.unit}}</div>
+                <div class="textTile">{{item.title}}</div>
             </van-grid-item>
         </van-grid>
     </div>

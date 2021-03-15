@@ -21,10 +21,10 @@ const routes = [
     component:() => import("../views/home/Home")
   },
   {
-    path: "/classfy",
-    name: "Classfy",
+    path: "/classify",
+    name: "Classify",
     component: () =>
-        import("../views/classfy/Classfy")
+        import("../views/classfy/Classify")
   },
   {
     path: "/profile",

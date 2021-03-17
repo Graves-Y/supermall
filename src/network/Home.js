@@ -1,15 +1,15 @@
-import {request,requestNPS} from "./request";
+import {request, requestNPS} from "./request";
 
 export function getHomeMutidata() {
     return request({
-        url:"/home/multidata"
+        url: "/home/multidata"
     })
 }
 
-export function getNpsData(type,page) {
+export function getNpsData(type, page) {
     return requestNPS({
-        url:'home/data',
-        params:{
+        url: 'home/data',
+        params: {
             type,
             page
         }

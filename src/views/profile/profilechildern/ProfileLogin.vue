@@ -23,14 +23,16 @@
 </script>
 
 <style scoped>
-    .profilePNL{
+    .profilePNL {
         display: flex;
         padding: 8px;
         background-color: #BDBCF0;
     }
-    .profilePNL img{
+
+    .profilePNL img {
         width: 22%;
     }
+
     .loginDeali {
         padding-left: 10px;
         padding-top: 20px;
@@ -38,10 +40,12 @@
         font-weight: 550;
         color: white;
     }
+
     .phoneInfo img {
         width: 30px;
         margin-left: -7px;
     }
+
     .phoneInfo {
         display: flex;
         height: 30px;
@@ -49,6 +53,7 @@
         /*background-color: red;*/
         margin-top: 10px;
     }
+
     .toLogin {
         /*display: flex;*/
         justify-content: center;

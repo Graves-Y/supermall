@@ -6,7 +6,8 @@
                      :key="item.maitKey"
                      class="classifyTitle"
                      :class="{classifyTitleBefore : index === currentIndex}"
-                     @click="getCategoryContent(item,index)">{{item.title}}</div>
+                     @click="getCategoryContent(item,index)">{{item.title}}
+                </div>
             </div>
 
         </scroll>
@@ -16,31 +17,32 @@
 <script>
     import {getCategoryTitle} from '../../../network/category'
     import Scroll from "../../../components/common/scroll/Scroll";
+
     export default {
         name: "ClassifyTitle",
-        data(){
-          return {
-              titleLists:[],
-              currentIndex:0
-          }
+        data() {
+            return {
+                titleLists: [],
+                currentIndex: 0
+            }
         },
-        components:{
+        components: {
             Scroll
         },
         created() {
             this.getCategoryTitle()
         },
-        methods:{
-            getCategoryTitle(){
+        methods: {
+            getCategoryTitle() {
                 getCategoryTitle().then(res => {
                     this.titleLists = res.data.data.category.list
-                    this.getCategoryContent(this.titleLists[0],0)
+                    this.getCategoryContent(this.titleLists[0], 0)
                     console.log(res.data.data.category.list);
                 })
             },
-            getCategoryContent(item,index){
+            getCategoryContent(item, index) {
                 this.currentIndex = index
-                this.$emit('getCategoryContent',item.maitKey)
+                this.$emit('getCategoryContent', item.maitKey)
             }
         },
         mounted() {
@@ -51,22 +53,25 @@
 </script>
 
 <style scoped>
-    .left{
+    .left {
         width: 100%;
         text-align: center;
     }
+
     .classifyTitle {
         height: 38px;
         line-height: 38px;
         font-size: 20px;
     }
-    .classifyTitleBefore{
+
+    .classifyTitleBefore {
         color: red;
         border-left: 3px solid;
         font-weight: 600;
         background-color: white;
     }
-    .content{
+
+    .content {
         overflow: hidden;
         height: calc(100vh - 97px);
     }

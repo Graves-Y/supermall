@@ -10,46 +10,45 @@
 
 <script>
     import Vue from 'vue'
-    import { Checkbox } from 'vant';
+    import {Checkbox} from 'vant';
     import {mapGetters} from 'vuex'
     import {Toast} from 'vant'
+
     Vue.use(Checkbox)
     export default {
         name: "CartBottom",
-        data(){
-          return {
-          }
+        data() {
+            return {}
         },
-        components:{
-        },
-        methods:{
-            selectAll(){
-                if(this.isCheckAll){
+        components: {},
+        methods: {
+            selectAll() {
+                if (this.isCheckAll) {
                     this.getCartLists.forEach(item => item.checked = false)
                 } else {
                     this.getCartLists.forEach(item => item.checked = true)
                 }
             },
-            toPay () {
-                if(this.getCartLists.length === 0) {
+            toPay() {
+                if (this.getCartLists.length === 0) {
                     Toast('请先选择商品加入购物车')
                     return
                 }
-                if(!this.getCartLists.filter(item => item.checked === true).length){
+                if (!this.getCartLists.filter(item => item.checked === true).length) {
                     Toast('请选择商品')
                 }
             }
         },
-        computed:{
+        computed: {
             ...mapGetters(['getCartLists']),
-            totalPrice(){
+            totalPrice() {
                 return this.$store.state.cartLists.filter(item => {
                     return item.checked
-                }).reduce((previousValue,item) => {
+                }).reduce((previousValue, item) => {
                     return previousValue + item.price * item.count
-                },0).toFixed(2)
+                }, 0).toFixed(2)
             },
-            totalNum(){
+            totalNum() {
                 // return this.$store.state.cartLists.filter(item => {
                 //     return item.checked
                 // }).reduce((previousValue,item) => {
@@ -57,8 +56,8 @@
                 // },0)
                 return this.getCartLists.filter(item => item.checked).length
             },
-            isCheckAll:{
-                get: function() {
+            isCheckAll: {
+                get: function () {
                     if (this.getCartLists.length === 0) return false
                     // 使用find
                     return !this.getCartLists.find(item => !item.checked)
@@ -72,7 +71,7 @@
                     // }
                     //     return true
                 },
-                set: function() {
+                set: function () {
                 }
             }
         }
@@ -88,14 +87,17 @@
         display: flex;
         padding: 10px;
     }
+
     .checkAll {
         font-size: 16px;
     }
+
     .total {
         margin-left: 30px;
         font-size: 18px;
         color: orange;
     }
+
     .pay {
         background-color: red;
         font-size: 22px;

@@ -14,9 +14,10 @@
     import ProfileLogin from "./profilechildern/ProfileLogin";
     import ProfileInfo from "./profilechildern/ProfileInfo";
     import ProfileContent from "./profilechildern/ProfileContent";
+
     export default {
         name: "Profile",
-        components:{
+        components: {
             NavBar,
             ProfileLogin,
             ProfileInfo,
@@ -26,7 +27,7 @@
 </script>
 
 <style scoped>
-#profile {
-    background-color: white;
-}
+    #profile {
+        background-color: white;
+    }
 </style>

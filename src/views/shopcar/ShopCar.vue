@@ -8,9 +8,8 @@
             <div class="hint" v-show="length === 0">
                 <img src="../../assets/img/cart/cartnull.png">
                 购物车空空的，去
-                <span class="toHome" @click="toHome">
-                逛逛
-            </span>吧~
+                <span class="toHome" @click="toHome">逛逛</span>
+                吧~
             </div>
         </scroll>
         <cart-bottom/>
@@ -20,35 +19,33 @@
 <script>
     import NavBar from "../../components/common/navbar/NavBar";
     import Scroll from "../../components/common/scroll/Scroll";
-    import CartList from "./shopCarChildren/CartList";
-    import CartBottom from "./shopCarChildren/CartBottom";
+    import CartList from "./shopcarchildren/CartList";
+    import CartBottom from "./shopcarchildren/CartBottom";
     import {mapGetters} from 'vuex'
 
     export default {
         name: "ShopCar",
-        data(){
-            return{
-
-            }
+        data() {
+            return {}
         },
-        components:{
+        components: {
             NavBar,
             Scroll,
             CartList,
             CartBottom
         },
-        methods:{
-            toHome () {
+        methods: {
+            toHome() {
                 this.$router.push('/home')
             }
         },
-        computed:{
+        computed: {
             // 两种语法 语法一
             // ...mapGetters['getCartListLength','getCartLists']
             // 语法二
             ...mapGetters({
                 length: 'getCartListLength',
-                list:'getCartLists'
+                list: 'getCartLists'
             })
         },
         mounted() {
@@ -64,7 +61,8 @@
         position: relative;
         height: 100vh;
     }
-    .content{
+
+    .content {
         overflow: hidden;
         position: absolute;
         top: 49px;
@@ -82,10 +80,12 @@
         color: gray;
         /*background-color: red;*/
     }
-    .hint img{
+
+    .hint img {
         width: 100%;
     }
-    .toHome{
+
+    .toHome {
         color: blue;
         border-bottom: 1px solid;
     }

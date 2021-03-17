@@ -9,13 +9,13 @@
 
     export default {
         name: "GoodsList",
-        components:{
+        components: {
             GoodsListItem
         },
-        props:{
-            goods:{
-                type:Array,
-                default(){
+        props: {
+            goods: {
+                type: Array,
+                default() {
                     return []
                 }
             }

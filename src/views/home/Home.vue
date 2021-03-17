@@ -9,28 +9,12 @@
                 @scroll="controlScroll"
                 @pullingUp="loadMore"
                 :pull-up-load="true">
-            <yd-slider autoplay="3000">
-                <yd-slider-item v-for="(item,index) in results.banners" :key="index">
-                    <a :href="item.link">
-                        <img :src="item.image">
-                    </a>
-                </yd-slider-item>
-            </yd-slider>
-            <div class="recommend">
-                <div class="recommend-item" v-for="(item,index) in results.recommends" :key="index">
-                    <a :href="item.link">
-                        <img v-lazy="item.image">
-                    </a>
-                    <div>{{item.title}}</div>
-                </div>
-            </div>
-            <a href="https://act.mogujie.com/zzlx67">
-                <img class="reimg" src="../../assets/img/home/recommend_bg.jpg">
-            </a>
+            <slider :autoplay="3000" :banners="results.banners"/>
+            <home-recommend :recommends="results.recommends"/>
             <TabControl class="tab-control"
-                    :titles="titles"
-                    @tabControlClick="tabCClick"
-                    ref="tabControl"/>
+                        :titles="titles"
+                        @tabControlClick="tabCClick"
+                        ref="tabControl"/>
             <goods-list :goods="showGoods"/>
         </scroll>
         <back-top @click.native="backClick" v-show="isShowBackTop"/>
@@ -44,7 +28,8 @@
     import BackTop from "../../components/common/backtop/BackTop";
 
     import TabControl from "../../components/content/tabcontrol/TabControl";
-
+    import Slider from "../../components/common/slider/Slider";
+    import HomeRecommend from "./homechildren/HomeRecommend";
     import {mixinImgItemLoad} from "../../common/mixin";
 
     import {
@@ -54,35 +39,35 @@
 
     export default {
         name: "Home",
-        data(){
+        data() {
             return {
-                results:{
-                    banners:[],
-                    recommends:[],
-                    dKeyWords:[],
-                    keywords:[],
-                    goods:{
-                        pop:{page:0,list:[]},
-                        sell:{page:0,list:[]},
-                        new:{page:0,list:[]}
+                results: {
+                    banners: [],
+                    recommends: [],
+                    dKeyWords: [],
+                    keywords: [],
+                    goods: {
+                        pop: {page: 0, list: []},
+                        sell: {page: 0, list: []},
+                        new: {page: 0, list: []}
                     }
                 },
                 images: [
                     'https://img.yzcdn.cn/vant/apple-1.jpg',
                     'https://img.yzcdn.cn/vant/apple-2.jpg',
                 ],
-                currentType:'pop',
-                isShowBackTop:false,
-                tabOffSetTop:0,
-                saveY:0,
-                titles:['流行','热销','新款'],
-                imgItemLoad:null
+                currentType: 'pop',
+                isShowBackTop: false,
+                tabOffSetTop: 0,
+                saveY: 0,
+                titles: ['流行', '热销', '新款'],
+                imgItemLoad: null
             }
         },
-        computed:{
-          showGoods(){
-              return this.results.goods[this.currentType].list
-          }
+        computed: {
+            showGoods() {
+                return this.results.goods[this.currentType].list
+            }
         },
         created() {
             this.getHomeMutidata()
@@ -90,11 +75,11 @@
             this.getNPSData('new')
             this.getNPSData('sell')
         },
-        mixins:[mixinImgItemLoad],
+        mixins: [mixinImgItemLoad],
         mounted() {
         },
-        methods:{
-            tabCClick(index){
+        methods: {
+            tabCClick(index) {
                 switch (index) {
                     case 0:
                         this.currentType = "pop"
@@ -107,79 +92,61 @@
                         break
                 }
             },
-            controlScroll(position){
+            controlScroll(position) {
                 this.isShowBackTop = position.y < -1000
             },
-            loadMore(){
+            loadMore() {
                 this.getNPSData(this.currentType)
 
             },
-            getHomeMutidata(){
+            getHomeMutidata() {
                 getHomeMutidata().then(res => {
                     this.results.banners = res.data.data.banner.list
                     this.results.recommends = res.data.data.recommend.list
-                    // console.log(res);
                 })
             },
-            getNPSData(type){
+            getNPSData(type) {
                 const page = this.results.goods[type].page + 1
-                getNpsData(type,page).then(res => {
+                getNpsData(type, page).then(res => {
                     this.results.goods[type].list.push(...res.data.data.list)
                     this.results.goods[type].page += 1
                     this.$refs.scroll.scroll.finishPullUp()
                 })
             },
-            backClick(){
-                this.$refs.scroll.scroll.scrollTo(0,0,500)
+            backClick() {
+                this.$refs.scroll.scroll.scrollTo(0, 0, 500)
             }
         },
-        components:{
+        components: {
             NavBar,
             TabControl,
             GoodsList,
             Scroll,
-            BackTop
+            BackTop,
+            Slider,
+            HomeRecommend
         },
         activated() {
             this.$refs.scroll.refresh()
-            this.$refs.scroll.scroll.scrollTo(0,this.saveY,0)
+            this.$refs.scroll.scroll.scrollTo(0, this.saveY, 0)
 
         },
         deactivated() {
             this.saveY = this.$refs.scroll.getY()
 
-            this.$bus.$off('imgItemLoad',this.imgItemLoad)
+            this.$bus.$off('imgItemLoad', this.imgItemLoad)
         }
 
     }
 </script>
 
 <style scoped>
-    .recommend{
-        display: flex;
-        width: 100%;
-        text-align: center;
-        font-size: 16px;
-        padding: 10px 0 20px;
-        border-bottom: 8px solid #eee;
-        background-color: white;
-    }
-    .recommend-item{
-        flex: 1;
-    }
-    .recommend-item img{
-        width: 80px;
-        height: 80px;
-        margin-top: 10px;
-    }
-    .reimg{
-        width: 100%;
-    }
     #home {
         position: relative;
         /*padding-top: 44px;*/
         height: 100vh;
     }
+
     /*
         吸顶
     */
@@ -188,11 +155,12 @@
     /*    top: 44px;*/
     /*    z-index: 9;*/
     /*}*/
-    .tab-control{
+    .tab-control {
         height: 40px;
         line-height: 40px;
     }
-    .content{
+
+    .content {
         overflow: hidden;
         position: absolute;
         top: 44px;
@@ -200,6 +168,7 @@
         left: 0;
         right: 0;
     }
+
     /*.content {*/
     /*    height: calc(100% - 93px);*/
     /*    overflow: hidden;*/

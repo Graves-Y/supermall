@@ -1,13 +1,13 @@
 export default {
-    addCartCount(state,payload){
+    addCartCount(state, payload) {
         payload.count++
     },
-    addCartType(state,payload){
+    addCartType(state, payload) {
         payload.count = 1
         payload.checked = false
         state.cartLists.push(payload)
     },
-    deleteCart(state,payload){
-        state.cartLists = state.cartLists.filter(item=>item.iid !== payload)
+    deleteCart(state, payload) {
+        state.cartLists = state.cartLists.filter(item => item.iid !== payload)
     }
 }

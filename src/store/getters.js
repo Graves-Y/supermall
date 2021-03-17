@@ -1,11 +1,11 @@
 export default {
-    getCartListLength(state){
+    getCartListLength(state) {
         return state.cartLists.length
     },
-    getCartLists(state){
+    getCartLists(state) {
         return state.cartLists
     },
-    getProfileInfo(state){
+    getProfileInfo(state) {
         return state.profileInfo
     }
 }

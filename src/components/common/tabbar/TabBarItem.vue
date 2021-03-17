@@ -9,37 +9,37 @@
 <script>
     export default {
         name: "TabBarItem",
-        props:{
-            path:String,
-            activeColor:{
-                type:String,
-                default:'red'
+        props: {
+            path: String,
+            activeColor: {
+                type: String,
+                default: 'red'
             },
         },
 
-        data(){
-            return{
+        data() {
+            return {
                 // isActive:false
             }
         },
-        methods:{
-            changePath(){
+        methods: {
+            changePath() {
                 this.$router.push(this.path)
             }
         },
-        computed:{
-            isActive(){
+        computed: {
+            isActive() {
                 return this.$route.path.indexOf(this.path) !== -1
             },
-            isActiveColor(){
-                return this.isActive ? {color:this.activeColor} : {}
+            isActiveColor() {
+                return this.isActive ? {color: this.activeColor} : {}
             }
         }
     }
 </script>
 
 <style scoped>
-    .tab-bar-item{
+    .tab-bar-item {
         flex: 1;
         text-align: center;
         font-size: 23px;

@@ -1,17 +1,17 @@
-import { requestNPS } from "./request";
+import {requestNPS} from "./request";
 
 export function getCategoryTitle() {
-  return requestNPS({
-    url: '/category'
-  })
+    return requestNPS({
+        url: '/category'
+    })
 }
 
 
 export function getSubcategory(maitKey) {
-  return requestNPS({
-    url:'subcategory',
-    params:{
-      maitKey
-    }
-  })
+    return requestNPS({
+        url: 'subcategory',
+        params: {
+            maitKey
+        }
+    })
 }

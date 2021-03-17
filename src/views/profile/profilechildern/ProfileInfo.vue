@@ -11,15 +11,16 @@
 
 <script>
     import Vue from 'vue';
-    import { Grid, GridItem } from 'vant';
+    import {Grid, GridItem} from 'vant';
     import {mapGetters} from 'vuex'
+
     Vue.use(Grid);
     Vue.use(GridItem);
     export default {
         name: "ProfileInfo",
-        computed:{
+        computed: {
             ...mapGetters(['getProfileInfo']),
-            profileInfo(){
+            profileInfo() {
 
                 return this.getProfileInfo
             }
@@ -32,10 +33,12 @@
         border-bottom: 20px solid #eee;
         color: gray;
     }
+
     .textNum {
         font-size: 18px;
         color: orange;
     }
+
     .textTile {
         font-size: 20px;
         margin-top: 5px;

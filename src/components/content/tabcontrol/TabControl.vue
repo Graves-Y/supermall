@@ -12,43 +12,46 @@
 <script>
     export default {
         name: "TabControl",
-        data(){
-          return{
-              currentIndex:0
-          }
+        data() {
+            return {
+                currentIndex: 0
+            }
         },
-        props:{
-            titles:{
-                type:Array,
-                default(){
+        props: {
+            titles: {
+                type: Array,
+                default() {
                     return []
                 }
             }
         },
-        methods:{
-            changeItem(index){
+        methods: {
+            changeItem(index) {
                 this.currentIndex = index
-                this.$emit("tabControlClick",index)
+                this.$emit("tabControlClick", index)
             }
         }
     }
 </script>
 
 <style scoped>
-    #tab-control{
+    #tab-control {
         display: flex;
         background-color: white;
     }
-    .tab-control-item{
+
+    .tab-control-item {
         flex: 1;
 
         text-align: center;
         font-size: 16px;
     }
-    .active{
+
+    .active {
         color: hotpink;
     }
-    .active span{
+
+    .active span {
         padding: 5px;
         border-bottom: 3px solid hotpink;
     }

@@ -2,13 +2,14 @@ import {requestNPS} from "./request";
 
 export function getDetail(iid) {
     return requestNPS({
-        url:"/detail",
-        params:{
+        url: "/detail",
+        params: {
             iid
         }
 
     })
 }
+
 export class Goods {
     constructor(itemInfo, columns, services) {
         this.title = itemInfo.title
@@ -21,6 +22,7 @@ export class Goods {
         this.realPrice = itemInfo.lowNowPrice
     }
 }
+
 export class Shop {
     constructor(shopInfo) {
         this.logo = shopInfo.shopLogo;
@@ -43,6 +45,6 @@ export class GoodsParam {
 
 export function getDetailRecommend() {
     return requestNPS({
-        url:"/recommend"
+        url: "/recommend"
     })
 }

@@ -8,21 +8,21 @@
 
 <script>
     import CartListItem from "./CartListItem";
+
     export default {
-        props:{
-          cartList:{
-              type:Array,
-              default(){
-                  return []
-              }
-          }
+        props: {
+            cartList: {
+                type: Array,
+                default() {
+                    return []
+                }
+            }
         },
         name: "CartList",
         components: {
             CartListItem
         },
-        methods:{
-        },
+        methods: {},
         mounted() {
         }
     }

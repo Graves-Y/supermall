@@ -18,14 +18,15 @@
     import ClassifyTitle from "./classifychildren/ClassifyTitle";
     import ClassifyContent from "./classifychildren/ClassifyContent";
     import {getSubcategory} from '../../network/category'
+
     export default {
         name: "Classfy",
-        data(){
-          return{
-            contentList:[]
-          }
+        data() {
+            return {
+                contentList: []
+            }
         },
-        components:{
+        components: {
             NavBar,
             ClassifyTitle,
             ClassifyContent
@@ -35,8 +36,8 @@
             //     this.contentList = res.data.data.list
             // })
         },
-        methods:{
-            getCategoryContent(maitKey){
+        methods: {
+            getCategoryContent(maitKey) {
                 getSubcategory(maitKey).then(res => {
                     this.contentList = res.data.data.list
                     this.$refs.content.$emit('backTop')
@@ -48,13 +49,15 @@
 </script>
 
 <style scoped>
-    .content{
+    .content {
         display: flex;
     }
-    .classifyTitle{
+
+    .classifyTitle {
         width: 30%;
     }
-    .classifyContent{
+
+    .classifyContent {
         width: 70%;
     }
 </style>

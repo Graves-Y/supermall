@@ -12,24 +12,24 @@
 <script>
     export default {
         name: "GoodsListItem",
-        props:{
-            goodsItem:{
-                type:Object,
-                default(){
+        props: {
+            goodsItem: {
+                type: Object,
+                default() {
                     return {}
                 }
             }
         },
-        computed:{
-          showImg(){
-              return this.goodsItem.image || this.goodsItem.showLarge.img
-          },
-          getIID(){
-              return this.goodsItem.item_id || this.goodsItem.iid
-          }
+        computed: {
+            showImg() {
+                return this.goodsItem.image || this.goodsItem.showLarge.img
+            },
+            getIID() {
+                return this.goodsItem.item_id || this.goodsItem.iid
+            }
         },
-        methods:{
-            imgLoad(){
+        methods: {
+            imgLoad() {
                 // 当详情页加载图片时，首页不需要调用加载方法
                 // 方式一：
                 // if(this.$route.path.indexOf("/home")){
@@ -39,8 +39,8 @@
                 // }
                 this.$bus.$emit("imgItemLoad")
             },
-            goToDetail(){
-                this.$router.push("/detail/"+this.getIID)
+            goToDetail() {
+                this.$router.push("/detail/" + this.getIID)
             }
         }
     }

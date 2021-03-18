@@ -8,7 +8,9 @@
             <div class="title">{{item.title}}</div>
         </div>
         <div class="set">
-            <img src="../../../assets/img/profile/set.jpeg">
+            <div class="set-img">
+                <img src="../../../assets/img/profile/set.jpeg">
+            </div>
             <div class="title">设置</div>
         </div>
     </div>
@@ -97,5 +99,10 @@
         line-height: 44px;
         font-size: 18px;
         margin-left: 6px;
+    }
+
+    .set-img {
+        display: flex;
+        align-items: center;
     }
 </style>

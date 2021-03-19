@@ -23,26 +23,22 @@ const routes = [
     {
         path: "/classify",
         name: "Classify",
-        component: () =>
-            import("../views/classfy/Classify")
+        component: () => import("../views/classfy/Classify")
     },
     {
         path: "/profile",
         name: "Profile",
-        component: () =>
-            import("../views/profile/Profile")
+        component: () => import("../views/profile/Profile")
     },
     {
         path: "/shopcar",
         name: "ShopCar",
-        component: () =>
-            import("../views/shopcar/ShopCar")
+        component: () => import("../views/shopcar/ShopCar")
     },
     {
         path: "/detail/:iid",
         name: "Detail",
-        component: () =>
-            import("../views/detail/Detail")
+        component: () => import("../views/detail/Detail")
     },
 
 ]

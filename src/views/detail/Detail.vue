@@ -5,7 +5,7 @@
                 <img src="../../assets/img/common/back.svg" @click="btnBack">
             </template>
             <template v-slot:center>
-                <tab-control :titles=titles @tabControlClick="goIndex" ref="tabControl"></tab-control>
+                <tab-control :titles=titles @tabControlClick="goIndex" ref="tabControl" />
             </template>
         </nav-bar>
         <scroll class="content" @scroll="controlScroll" ref="scroll" :probe-type="3">

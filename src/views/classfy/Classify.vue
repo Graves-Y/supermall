@@ -5,10 +5,10 @@
         </nav-bar>
         <div class="content">
             <classify-title class="classifyTitle"
-                            @getCategoryContent="getCategoryContent"></classify-title>
+                            @getCategoryContent="getCategoryContent" />
             <classify-content class="classifyContent"
                               :content-list="contentList"
-                              ref="content"></classify-content>
+                              ref="content" />
         </div>
     </div>
 </template>
